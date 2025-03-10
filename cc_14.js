@@ -6,6 +6,7 @@ const ticketContainer = document.getElementById("ticketContainer");
 function addSupportTicket(customerName, issueDescription, priorityLevel) {
     const ticket = document.createElement("div");
     ticket.setAttribute("class", "support-ticket");
+    ticket.setAttribute("id", ticketContainer)
 
 //Creating a heading for the custommer's name.
     const nameHeading = document.createElement("h2");
@@ -27,6 +28,21 @@ function addSupportTicket(customerName, issueDescription, priorityLevel) {
     const resolveButton = document.createElement("button");
     resolveButton.textContent = "Resolve";
     resolveButton.setAttribute("class", "resolve-button");
+
+
+//Task 4: Implementing Ticket Resolution with Event Bubbling
+//Attach a click event listener to the "Resolve" button that removes its parent ticket using removeChild.
+    resolveButton.addEventListener("click", (event) => {
+        ticketContainer.removeChild(ticket);
+        console.log(`${customerName} was removed!`); //Logs a message when the resolve button is clicked.
+        event.stopPropagation(); //Preventing the event from bubbling up to the container.
+    });
+
+//Attach a click event listener to "ticketContainer" that logs a message when any ticket is clicked.
+    ticket.addEventListener("click", (event) => {
+        console.log(`${customerName} was clicked.`); //Logs a message when the ticket is clicked.  
+        event.stopPropagation();
+    });
 
 //Append the support ticket to "ticketContainer" using appendChild.
     ticket.appendChild(nameHeading);
@@ -53,8 +69,8 @@ function highlightHighPriorityTickets() {
 
 //Use an array method to update the appearance of high-priority tickets.
     ticketArray.forEach(ticket => {
-        ticket.style.backgroundColor = "lightgreen";
-        ticket.style.border = "darkgreen";
+        ticket.style.backgroundColor = "lightgreen"; //Add background color.
+        ticket.style.border = "1px solid darkgreen"; //Add border.
     });
 };
 
