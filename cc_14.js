@@ -6,7 +6,6 @@ const ticketContainer = document.getElementById("ticketContainer");
 function addSupportTicket(customerName, issueDescription, priorityLevel) {
     const ticket = document.createElement("div");
     ticket.setAttribute("class", "support-ticket");
-    ticket.setAttribute("id", ticketContainer)
 
 //Creating a heading for the custommer's name.
     const nameHeading = document.createElement("h2");
@@ -44,11 +43,63 @@ function addSupportTicket(customerName, issueDescription, priorityLevel) {
         event.stopPropagation();
     });
 
+
+//Task 5: Inline Editing of Employee Details
+//Create an edit button for editing the card.
+    const editButton = document.createElement("button");
+    editButton.textContent = "Edit";
+    editButton.setAttribute("class", "edit-button");
+
+//Add an event listener to each employee card (or an edit button within it) that, on double-click, swaps static content with input fields.
+    editButton.addEventListener("click", (event) => {
+        const nameInput = document.createElement("input"); // Create input fields for editing customer's name.
+        nameInput.value = nameHeading.textContent;
+        nameInput.setAttribute("type", "text");
+
+        const issueInput = document.createElement("input"); //Create input fields for editing issue description.
+        issueInput.value = issueParagraph.textContent;
+        issueInput.setAttribute("type", "text");
+
+        const priorityInput = document.createElement("input"); //Create input fields for editing priority level.
+        priorityInput.value = priorityLabel.textContent.replace(".priority-level");
+        priorityInput.setAttribute("type", "text");
+
+        const saveButton = document.createElement("button"); //Create a save button to save the edited details.
+        saveButton.textContent = "Save Changes";
+        saveButton.addEventListener("click", (event) => {
+    //Update card content with new values
+            nameHeading.textContent = nameInput.value;
+            issueParagraph.textContent = `Issue Description: ${issueInput.value}`;
+            priorityLabel.textContent = `Priority Level: ${priorityInput.value}`;
+
+    //Updare priority class
+            priorityInput.setAttribute("class", "priority-level");
+            priorityInput.classList.add(`priority-${priorityLevel.toLowerCase()}`);
+
+
+    //Revert input fields back to static text
+            ticket.replaceChild(nameHeading, nameInput);
+            ticket.replaceChild(issueParagraph, issueInput);
+            ticket.replaceChild(priorityLabel, priorityInput);
+            ticket.removeChild(saveButton);
+        
+    // Reapply high-priority highlighting if needed
+    highlightHighPriorityTickets();
+    });
+
+    //Replace static elements with input fields and save button
+        ticket.replaceChild(nameInput, nameHeading);
+        ticket.replaceChild(issueInput, issueParagraph);
+        ticket.replaceChild(priorityInput, priorityLabel);
+        ticket.appendChild(saveButton);
+        });
+
 //Append the support ticket to "ticketContainer" using appendChild.
     ticket.appendChild(nameHeading);
     ticket.appendChild(issueParagraph);
     ticket.appendChild(priorityLabel);
     ticket.appendChild(resolveButton);
+    ticket.appendChild(editButton);
     ticketContainer.appendChild(ticket);
 
 };
