@@ -4,8 +4,8 @@ const ticketContainer = document.getElementById("ticketContainer");
 
 //Write a function that uses createElement to build a support ticket.
 function addSupportTicket(customerName, issueDescription, priorityLevel) {
-    const card = document.createElement("div");
-    card.setAttribute("class", "support-ticket");
+    const ticket = document.createElement("div");
+    ticket.setAttribute("class", "support-ticket");
 
 //Creating a heading for the custommer's name.
     const nameHeading = document.createElement("h2");
@@ -20,7 +20,8 @@ function addSupportTicket(customerName, issueDescription, priorityLevel) {
 //Create a label indicating priority level.
     const priorityLabel = document.createElement("span");
     priorityLabel.textContent = `Priority Level: ${priorityLevel}`;
-    priorityLabel.setAttribute("class", "priorty-level");
+    priorityLabel.setAttribute("class", "priority-level");
+    priorityLabel.classList.add(`priority-${priorityLevel.toLowerCase()}`);
 
 //Add a resolve button to remove the ticket.
     const resolveButton = document.createElement("button");
@@ -28,11 +29,11 @@ function addSupportTicket(customerName, issueDescription, priorityLevel) {
     resolveButton.setAttribute("class", "resolve-button");
 
 //Append the support ticket to "ticketContainer" using appendChild.
-    card.appendChild(nameHeading);
-    card.appendChild(issueParagraph);
-    card.appendChild(priorityLabel);
-    card.appendChild(resolveButton);
-    ticketContainer.appendChild(card);
+    ticket.appendChild(nameHeading);
+    ticket.appendChild(issueParagraph);
+    ticket.appendChild(priorityLabel);
+    ticket.appendChild(resolveButton);
+    ticketContainer.appendChild(ticket);
 
 };
 
@@ -40,3 +41,22 @@ function addSupportTicket(customerName, issueDescription, priorityLevel) {
 addSupportTicket("Zachary Keenan", "The website is showing a 404 error when trying to access my account.", "High");
 addSupportTicket("Sandra Ktla", "I need to update shipping address for an existing order.", "Medium");
 addSupportTicket("Claire Mosley", "I can't find the option to reset my password on the login page.", "Low");
+
+
+//Task 3: Converting NodeLists to Arrays for Bulk Updates
+//Use document.querySelectorAll to select all tickets with a "High" priority class.
+function highlightHighPriorityTickets() {
+    const highPriorityTickets = document.querySelectorAll(".priority-high");
+
+//Convert the NodeList into an array using Array.from() or the spread operator.
+    const ticketArray = Array.from(highPriorityTickets);
+
+//Use an array method to update the appearance of high-priority tickets.
+    ticketArray.forEach(ticket => {
+        ticket.style.backgroundColor = "lightgreen";
+        ticket.style.border = "darkgreen";
+    });
+};
+
+//Task 3: Test Cases - Call the function to highlight all tickets with a "High" priority class.
+highlightHighPriorityTickets();
