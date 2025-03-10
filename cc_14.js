@@ -61,7 +61,7 @@ function addSupportTicket(customerName, issueDescription, priorityLevel) {
         issueInput.setAttribute("type", "text");
 
         const priorityInput = document.createElement("input"); //Create input fields for editing priority level.
-        priorityInput.value = priorityLabel.textContent.replace(".priority-level");
+        priorityInput.value = priorityLabel.textContent.replace('Priority Level: ', '');
         priorityInput.setAttribute("type", "text");
 
         const saveButton = document.createElement("button"); //Create a save button to save the edited details.
